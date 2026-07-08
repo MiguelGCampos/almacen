@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 public record ProductoRequest(
         @NotBlank(message = "El nombre es requerido")
-        @Size(min=5, max=5, message = "El nombre es requerido y debe tener entre 5 y 30 caracteres")
+        @Size(min=5, max=30, message = "El nombre es requerido y debe tener entre 5 y 30 caracteres")
         String nombre,
 
         @NotBlank(message = "La categoria es reqeurida")
