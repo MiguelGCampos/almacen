@@ -1,10 +1,7 @@
 package com.miguel.almacen.controllers;
 
-import com.miguel.almacen.dto.productos.ProductoRequest;
-import com.miguel.almacen.dto.productos.ProductoResponse;
 import com.miguel.almacen.dto.sucursales.SucursalRequest;
 import com.miguel.almacen.dto.sucursales.SucursalResponse;
-import com.miguel.almacen.services.productos.ProductoService;
 import com.miguel.almacen.services.sucursales.SucursalService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;

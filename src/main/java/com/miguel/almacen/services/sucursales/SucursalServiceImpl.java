@@ -34,6 +34,7 @@ public class SucursalServiceImpl implements SucursalService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public SucursalResponse obtenerPorId(Long id) {
         return sucursalMapper.entidadAResponse(sucursalRepository.findById(id).orElseThrow(
                 ()->new RecursoNoEncontradoException("No se encontro una sucursal con el id: "+id)));
@@ -42,6 +43,8 @@ public class SucursalServiceImpl implements SucursalService{
     @Override
     public SucursalResponse registrar(SucursalRequest request) {
         log.info("Registrando nuevo producto");
+
+        validarDatosUnicos(request);
 
         Sucursal sucursal = sucursalMapper.requestAEntidad(request);
 
@@ -55,6 +58,10 @@ public class SucursalServiceImpl implements SucursalService{
     @Override
     public SucursalResponse actualizar(SucursalRequest request, Long id) {
         Sucursal sucursal = obtenerSucursalOException(id);
+
+        log.info("Actualizando sucursal con id: {}", id);
+
+        validarCambiosUnicos(request, id);
 
         sucursal.actualizar(
                 request.nombre(),
@@ -81,5 +88,19 @@ public class SucursalServiceImpl implements SucursalService{
         return sucursalRepository.findById(id).orElseThrow(
                 ()->new RecursoNoEncontradoException("Sucursal no encontrado con id: "+id)
         );
+    }
+
+    private void validarDatosUnicos(SucursalRequest request){
+        log.info("Validando nombre único...");
+        if(sucursalRepository.existsByNombreIgnoreCase(request.nombre().trim()))
+            throw new IllegalArgumentException("Ya existe una sucursal con el nombre de :"
+            + request.nombre());
+    }
+
+    private void validarCambiosUnicos(SucursalRequest request, Long id){
+        log.info("Validando nombre único...");
+        if(sucursalRepository.existsByNombreIgnoreCaseAndIdNot(request.nombre().trim(), id))
+            throw new IllegalArgumentException("Ya existe una sucursal con el nombre de :"
+                    + request.nombre());
     }
 }
