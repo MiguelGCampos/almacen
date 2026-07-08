@@ -20,7 +20,7 @@ public record ProductoRequest(
         BigDecimal precio,
 
         @NotNull(message = "La cantidad es requerido")
-        @Positive(message = "La cantidad debe ser positiva")
+        @Positive(message = "La cantidad debe ser positiva      ")
         Integer cantidad
 ) {
 }

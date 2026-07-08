@@ -1,4 +1,8 @@
 package com.miguel.almacen.dto;
 
-public record CustomErrorResponse() {
+public record CustomErrorResponse(
+        int codigo,
+        String mensaje
+) {
+
 }
