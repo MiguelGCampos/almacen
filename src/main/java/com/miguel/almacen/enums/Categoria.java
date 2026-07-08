@@ -25,8 +25,8 @@ public enum Categoria {
         String descripcionNormalizada = StringCustomUtils.quitarAcentos(descripcion.trim());
 
         for(Categoria categoria:values()){
-            if(StringCustomUtils.quitarAcentos(categoria.descripcion).equalsIgnoreCase(descripcionNormalizada));
-            return categoria;
+            if(StringCustomUtils.quitarAcentos(categoria.descripcion).equalsIgnoreCase(descripcionNormalizada))
+                return categoria;
         }
         throw new RecursoNoEncontradoException("No existe una categoría con la descripción: "+descripcion);
     }
