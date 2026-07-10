@@ -1,5 +1,6 @@
 package com.miguel.almacen.services.ventas;
 
+import com.miguel.almacen.dto.reportes.ReporteVentasResponse;
 import com.miguel.almacen.dto.ventas.DetalleVentaRequest;
 import com.miguel.almacen.dto.ventas.VentaRequest;
 import com.miguel.almacen.dto.ventas.VentaResponse;
@@ -108,6 +109,12 @@ public class VentaServiceImpl implements VentaService{
         }
         ventaRepository.save(venta);
         return ventaMapper.entidadAResponse(venta);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ReporteVentasResponse> reporteEconomico() {
+        return ventaRepository.obtenerResumenVentas();
     }
 
 }
