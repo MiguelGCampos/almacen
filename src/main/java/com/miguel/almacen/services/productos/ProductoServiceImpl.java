@@ -7,12 +7,14 @@ import com.miguel.almacen.enums.Categoria;
 import com.miguel.almacen.exceptions.RecursoNoEncontradoException;
 import com.miguel.almacen.mappers.ProductoMapper;
 import com.miguel.almacen.repositories.ProductoRepository;
+import com.miguel.almacen.specification.ProductoSpecs;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -27,10 +29,30 @@ public class ProductoServiceImpl implements ProductoService{
 
     @Override
     @Transactional(readOnly = true)
-    public List<ProductoResponse> listar() {
-        log.info("Listando toods los productos");
-        return productoRepository.findAll().stream()
-                .map(productoMapper::entidadAResponse).toList();
+    public List<ProductoResponse> listar(
+            String nombre,
+            String categoria,
+            BigDecimal precioMin,
+            BigDecimal precioMax
+    ) {
+        if (nombre == null && categoria == null && precioMin == null && precioMax == null) {
+            log.info("Listando productos SIN filtros (todos nulos)");
+        } else {
+            log.info("Listando productos con filtros: nombre={}, categoria={}, precioMin={}, precioMax={}",
+                    nombre != null ? nombre : "NULO",
+                    categoria != null ? categoria : "NULO",
+                    precioMin != null ? precioMin : "NULO",
+                    precioMax != null ? precioMax : "NULO");
+        }
+        Specification<Producto> spec = ProductoSpecs.tieneNombre(nombre)
+                .and(ProductoSpecs.esCategoria(categoria))
+                .and(ProductoSpecs.precioEntre(precioMin, precioMax));
+
+        List<Producto> productos = productoRepository.findAll(spec);
+
+        return productos.stream()
+                .map(productoMapper::entidadAResponse)
+                .toList();
     }
 
     @Override
@@ -90,4 +112,5 @@ public class ProductoServiceImpl implements ProductoService{
                 ()->new RecursoNoEncontradoException("Producto no encontrado con id: "+id)
         );
     }
+
 }

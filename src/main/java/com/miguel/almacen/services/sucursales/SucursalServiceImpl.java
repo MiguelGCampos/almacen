@@ -2,9 +2,7 @@ package com.miguel.almacen.services.sucursales;
 
 import com.miguel.almacen.dto.sucursales.SucursalRequest;
 import com.miguel.almacen.dto.sucursales.SucursalResponse;
-import com.miguel.almacen.entities.Producto;
 import com.miguel.almacen.entities.Sucursal;
-import com.miguel.almacen.enums.Categoria;
 import com.miguel.almacen.exceptions.RecursoNoEncontradoException;
 import com.miguel.almacen.mappers.SucursalMapper;
 import com.miguel.almacen.repositories.SucursalRepository;
