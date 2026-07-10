@@ -1,5 +1,6 @@
 package com.miguel.almacen.services.ventas;
 
+import com.miguel.almacen.dto.reportes.ReporteVentasResponse;
 import com.miguel.almacen.dto.ventas.VentaRequest;
 import com.miguel.almacen.dto.ventas.VentaResponse;
 import org.springframework.stereotype.Service;
@@ -18,4 +19,6 @@ public interface VentaService {
     VentaResponse registrar(VentaRequest request);
 
     VentaResponse cancelar(Long id);
+
+    List<ReporteVentasResponse> reporteEconomico();
 }

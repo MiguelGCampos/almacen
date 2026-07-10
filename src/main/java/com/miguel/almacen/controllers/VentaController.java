@@ -1,5 +1,6 @@
 package com.miguel.almacen.controllers;
 
+import com.miguel.almacen.dto.reportes.ReporteVentasResponse;
 import com.miguel.almacen.dto.ventas.VentaRequest;
 import com.miguel.almacen.dto.ventas.VentaResponse;
 import com.miguel.almacen.services.ventas.VentaService;
@@ -21,7 +22,7 @@ public class VentaController {
 
     private final VentaService ventaService;
 
-    @GetMapping("/activas")
+    @GetMapping
     public ResponseEntity<List<VentaResponse>> listarActivas(){
         return ResponseEntity.ok(ventaService.listarActivas());
     }
@@ -48,5 +49,10 @@ public class VentaController {
             @PathVariable @Positive(message = "El ID debe ser positivo") Long id){
         ventaService.cancelar(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/reporte-economico")
+    public List<ReporteVentasResponse> obtenerReporteEconomico() {
+        return ventaService.reporteEconomico();
     }
 }
