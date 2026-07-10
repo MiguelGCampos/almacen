@@ -6,13 +6,12 @@ import com.miguel.almacen.services.productos.ProductoService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
-import org.springframework.data.annotation.AccessType;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -24,8 +23,15 @@ public class ProductoController {
     private final ProductoService productoService;
 
     @GetMapping
-    public ResponseEntity<List<ProductoResponse>> listar(){
-        return ResponseEntity.ok(productoService.listar());
+    public ResponseEntity<List<ProductoResponse>> listar(
+            @RequestParam(required = false) String nombre,
+            @RequestParam(required = false) String categoria,
+            @RequestParam(required = false) BigDecimal precioMin,
+            @RequestParam(required = false) BigDecimal precioMax
+    ){
+        return ResponseEntity.ok(productoService.listar(
+                nombre, categoria, precioMin, precioMax
+        ));
     }
 
     @GetMapping("/{id}")

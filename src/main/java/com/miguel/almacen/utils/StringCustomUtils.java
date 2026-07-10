@@ -20,4 +20,6 @@ public class StringCustomUtils {
                 .replace("í","i").replace("ó","o")
                 .replace("ú","u").replace("ü","u");
     }
+
+
 }

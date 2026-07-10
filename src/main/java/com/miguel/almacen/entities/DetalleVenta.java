@@ -1,0 +1,45 @@
+package com.miguel.almacen.entities;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+@Getter
+@Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name="DETALLES_VENTAS")
+public class DetalleVenta {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_DETALLE_VENTA")
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_VENTA", nullable = false)
+    private Venta venta;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_PRODUCTO", nullable = false)
+    private Producto producto;
+
+    @Column(name = "CANTIDAD_PRODUCTO", nullable = false)
+    private Integer cantidadProducto;
+
+    @Column(name = "PRECIO_PRODUCTO", nullable = false)
+    private BigDecimal precioProducto;
+
+    public void asociarVenta(Venta venta) {
+        if (venta == null) {
+            throw new IllegalArgumentException("La venta no puede ser nula");
+        }
+        this.venta = venta;
+    }
+}
