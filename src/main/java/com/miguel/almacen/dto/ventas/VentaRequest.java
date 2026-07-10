@@ -15,7 +15,7 @@ public record VentaRequest(
         Long idSucursal,
         @NotEmpty(message = "La lista de productos es requerida y no debe estar vacio")
         List<@Valid DetalleVentaRequest> productos,
-        @NotNull(message = "La lista de productos es requerida y no debe estar vacio")
+        @NotNull(message = "El detalle de ventas es requerido y no debe estar vacio")
         EstadoVenta estadoVenta
 
 ) {
